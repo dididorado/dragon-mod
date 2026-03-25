@@ -75,6 +75,12 @@ minecraft {
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
 
+            // Fix GeckoLib Mixin refmap issue in dev environment with official mappings:
+            // geckolib.refmap.json has no 'official' data section, so Mixin falls back to
+            // SRG name 'm_118506_' which doesn't exist in Mojang-mapped dev env.
+            // Disabling the refmap makes Mixin look up the Mojang name directly.
+            property 'mixin.env.disableRefMap', 'true'
+
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -141,7 +147,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     //GECKOLIB HINZUFÜGEN1
-    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.21:4.7")
+    implementation fg.deobf("software.bernie.geckolib:geckolib-forge-1.20.1:4.8.3")
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
